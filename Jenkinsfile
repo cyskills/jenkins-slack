@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        SLACK_CHANNEL = 'labs'
+        SLACK_CHANNEL = '???'
         SLACK_TOKEN = 'slack-token'
     }
 
