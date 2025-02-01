@@ -1,0 +1,25 @@
+services:
+  # Serviço Jenkins para integração contínua
+  jenkins:
+    build: ./jenkins  # Usa Dockerfile localizado em ./jenkins
+    container_name: jenkins-server  # Nome do contêiner Jenkins
+    privileged: true  # Permite Docker-in-Docker
+    user: root  # Executa como root
+    networks:
+      - skynet  # Conecta à rede 'skynet'
+    restart: always  # Reinicia sempre que necessário
+    environment:
+      - TZ=America/Sao_Paulo  # Fuso horário São Paulo
+    ports:
+      - "8080:8080"  # Interface web Jenkins
+      - "50000:50000"  # Comunicação com agentes
+    volumes:
+      - jenkins_home:/var/jenkins_home  # Persiste dados do Jenkins
+      - /var/run/docker.sock:/var/run/docker.sock  # Acesso ao Docker host
+
+volumes:
+  jenkins_home:  # Volume para persistência de dados Jenkins
+
+networks: 
+  skynet:
+    driver: bridge  # Usa rede do tipo bridge para comunicação entre contêineres
